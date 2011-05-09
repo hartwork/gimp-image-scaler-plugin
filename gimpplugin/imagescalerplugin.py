@@ -43,7 +43,7 @@ register(
     "Scale Image _keeping Gamma...",
     "RGB*, GRAY*",
     [
-        (PF_STRING, "dummy",    "DUMMY",         None),
+        (PF_STRING, "",         "DUMMY",         None),
         (PF_IMAGE,  "image",    "Target Image",  None),
         (PF_INT,    "width",    "Width",         100),
         (PF_INT,    "height",   "Height",        100),
