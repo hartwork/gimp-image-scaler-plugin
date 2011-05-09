@@ -35,12 +35,12 @@ def process(dummy, img, width, height, interpol, gamma):
 
 register(
     PROC_NAME,
-    "Scale Image keeping Gamma",
+    "Gamma-correct image scaler",
     "",
     "Sebastian Pipping <sebastian@pipping.org>",
     "Sebastian Pipping <sebastian@pipping.org>",
     "2011-05-09",
-    "Scale Image _keeping Gamma...",
+    "Scale Image with _correct Gamma...",
     "RGB*, GRAY*",
     [
         (PF_STRING, "",         "DUMMY",         None),

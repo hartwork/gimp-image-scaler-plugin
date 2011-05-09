@@ -1,5 +1,5 @@
 ###
-### imagescaler - Scale image keeping Gamma
+### imagescaler - Gamma-correct image scaler
 ### Copyright (C) 2011 Sebastian Pipping <sebastian@pipping.org>
 ###
 ### This program is free software; you can redistribute it and/or modify
