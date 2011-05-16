@@ -31,11 +31,11 @@ def linear2exp(linear, gamma):
 
 
 def rgb2s(rgb, gamma):
-    return ''.join(chr(linear2exp(e, gamma)) for e in rgb)
+    return ''.join(chr(int(linear2exp(e, gamma))) for e in rgb)
 
 
 def rgba2s(rgba, gamma):
-    return ''.join(chr(linear2exp(e, gamma)) for e in rgba)
+    return ''.join(chr(int(linear2exp(e, gamma))) for e in rgba)
 
 
 def s2rgba(s, gamma):
