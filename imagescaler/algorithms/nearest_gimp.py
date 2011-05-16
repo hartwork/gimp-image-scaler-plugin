@@ -21,7 +21,7 @@
 from imagescaler.utils import get_rgba, CLAMP
 
 
-def interpolate_nearest_gimp(src_region, src_layer, sx, sy, xfrac, yfrac, gamma):
+def interpolate_nearest_gimp(src_region, src_layer, sx, sy, xfrac, yfrac, gamma, cache_exp2linear):
     x = CLAMP(sx if (xfrac <= 0.5) else sx + 1, 0, src_region.w - 1)
     y = CLAMP(sy if (yfrac <= 0.5) else sy + 1, 0, src_region.h - 1)
-    return get_rgba(x, y, gamma, src_region, src_layer)
+    return get_rgba(x, y, gamma, src_region, src_layer, cache_exp2linear)

@@ -27,13 +27,13 @@ def cubic_spline_fit(dx, pt0, pt1, pt2, pt3):
             ( -pt0 + pt2 ) ) * dx + (pt1 + pt1) ) / 2.0)
 
 
-def interpolate_cubic_gimp(src_region, src_layer, sx, sy, xfrac, yfrac, gamma):
+def interpolate_cubic_gimp(src_region, src_layer, sx, sy, xfrac, yfrac, gamma, cache_exp2linear):
     # TODO Pixel positions translated correctly?
     rows = list()
     for ry in xrange(0, 4):
         rows.append(list())
         for rx in xrange(0, 4):
-            rgba = get_rgba(sx - 1 + rx, sy - 1 + ry, gamma, src_region, src_layer)   
+            rgba = get_rgba(sx - 1 + rx, sy - 1 + ry, gamma, src_region, src_layer, cache_exp2linear)
             rows[ry].extend(rgba)
     s0, s1, s2, s3 = rows
 

@@ -17,7 +17,7 @@
 ### Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ###
 
-from imagescaler.utils import set_rgba
+from imagescaler.utils import set_rgba, make_exp2linear_cache
 from imagescaler.algorithms.bilinear_gimp import interpolate_bilinear_gimp
 from imagescaler.algorithms.nearest_gimp import interpolate_nearest_gimp
 from imagescaler.algorithms.cubic_gimp import interpolate_cubic_gimp
@@ -34,7 +34,7 @@ AVALIABLE_ALGORITHMS = [name for i, (f, name) in enumerate(algorithm_data)]
 DEFAULT_ALGORITHM = 2
 
 
-def scale_copy_layer(dst_layer, src_layer, interpol, gamma, env, layer_index, layer_count):
+def scale_copy_layer(dst_layer, src_layer, interpol, gamma, env, layer_index, layer_count, cache_exp2linear):
 
     def region(layer):
         dirty = True
@@ -61,7 +61,7 @@ def scale_copy_layer(dst_layer, src_layer, interpol, gamma, env, layer_index, la
             sx = int(xfrac)
             xfrac = xfrac - sx
 
-            rgba = f(src_region, src_layer, sx, sy, xfrac, yfrac, gamma)
+            rgba = f(src_region, src_layer, sx, sy, xfrac, yfrac, gamma, cache_exp2linear)
             set_rgba(x, y, rgba, gamma, dst_region, dst_layer)
 
             n_done = n_done + 1
@@ -76,13 +76,14 @@ def scale_image(img, width, height, interpol, gamma, env):
     img.resize(width, height, 0, 0)
     
     env.progress_update(0)
+    cache_exp2linear = make_exp2linear_cache(gamma)
     layer_count = len(img.layers)
     for i, dst_layer in enumerate(img.layers):
         env.progress_init("Resizing layer container")
         dst_layer.resize(width, height, 0, 0)
 
         env.progress_init("Scaling layer %d of %d" % (i + 1, layer_count))
-        scale_copy_layer(dst_layer, layer_backups[i], interpol, gamma, env, i, layer_count)
+        scale_copy_layer(dst_layer, layer_backups[i], interpol, gamma, env, i, layer_count, cache_exp2linear)
         dst_layer.flush()
         
         env.delete(layer_backups[i])

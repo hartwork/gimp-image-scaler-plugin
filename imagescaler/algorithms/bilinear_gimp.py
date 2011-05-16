@@ -25,12 +25,12 @@ def weighted_sum(dx, dy, s00, s10, s01, s11):
     return ((1 - dy) * ((1 - dx) * s00 + dx * s10) + dy * ((1 - dx) * s01 + dx * s11))
 
 
-def interpolate_bilinear_gimp(src_region, src_layer, sx, sy, xfrac, yfrac, gamma):
+def interpolate_bilinear_gimp(src_region, src_layer, sx, sy, xfrac, yfrac, gamma, cache_exp2linear):
     # TODO Pixel positions translated correctly?
-    p1 = get_rgba(sx,     sy,     gamma, src_region, src_layer)
-    p2 = get_rgba(sx + 1, sy,     gamma, src_region, src_layer)
-    p3 = get_rgba(sx    , sy + 1, gamma, src_region, src_layer)
-    p4 = get_rgba(sx + 1, sy + 1, gamma, src_region, src_layer)
+    p1 = get_rgba(sx,     sy,     gamma, src_region, src_layer, cache_exp2linear)
+    p2 = get_rgba(sx + 1, sy,     gamma, src_region, src_layer, cache_exp2linear)
+    p3 = get_rgba(sx    , sy + 1, gamma, src_region, src_layer, cache_exp2linear)
+    p4 = get_rgba(sx + 1, sy + 1, gamma, src_region, src_layer, cache_exp2linear)
 
     pixel = [0, 0, 0, 0]
 

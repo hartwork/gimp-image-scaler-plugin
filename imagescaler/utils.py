@@ -26,6 +26,17 @@ def exp2linear(pixel, gamma):
     return (pixel / 255.0)**float(gamma)
 
 
+def exp2linear_cached(pixel, gamma, cache_exp2linear):
+    return cache_exp2linear[pixel]
+
+
+def make_exp2linear_cache(gamma):
+    cache = list()
+    for i in xrange(0, 256):
+        cache.append(exp2linear(i, gamma))
+    return cache
+
+
 def linear2exp(linear, gamma):
     return (linear**(1.0 / gamma)) * 255
 
@@ -38,11 +49,11 @@ def rgba2s(rgba, gamma):
     return ''.join(chr(int(linear2exp(e, gamma))) for e in rgba)
 
 
-def s2rgba(s, gamma):
+def s2rgba(s, gamma, cache_exp2linear):
     num = [ord(c) for c in s]
     if len(num) == 3:
         num.append(255)
-    return [exp2linear(c, gamma) for c in num]
+    return [exp2linear_cached(c, gamma, cache_exp2linear) for c in num]
 
 
 def CLAMP(v, _min, _max):
@@ -56,7 +67,7 @@ def set_rgba(x, y, rgba, gamma, region, layer):
         region[x, y] = rgb2s(rgba[0:3], gamma)
 
 
-def get_rgba(x, y, gamma, region, layer):
+def get_rgba(x, y, gamma, region, layer, cache_exp2linear):
     x = CLAMP(x, 0, region.w - 1)
     y = CLAMP(y, 0, region.h - 1)
-    return s2rgba(region[x, y], gamma)
+    return s2rgba(region[x, y], gamma, cache_exp2linear)
