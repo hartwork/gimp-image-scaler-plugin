@@ -23,11 +23,11 @@
 
 
 def exp2linear(pixel, gamma):
-    return ((pixel / 255.0)**float(gamma)) * 255
+    return (pixel / 255.0)**float(gamma)
 
 
 def linear2exp(linear, gamma):
-    return ((linear / 255.0)**(1.0 / gamma)) * 255
+    return (linear**(1.0 / gamma)) * 255
 
 
 def rgb2s(rgb, gamma):
