@@ -1,5 +1,9 @@
 dist:
-	rm -f MANIFEST
+	$(RM) MANIFEST
 	python setup.py sdist
 
-.PHONY: dist
+clean:
+	$(RM) MANIFEST
+	find -type f -name '*.pyc' -delete
+
+.PHONY: dist clean
